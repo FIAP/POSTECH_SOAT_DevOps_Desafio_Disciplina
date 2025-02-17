@@ -29,3 +29,43 @@ jobs:
         run: mvn --batch-mode --update-snapshots verify
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+  deploy-STG:
+    runs-on: ubuntu-latest
+    needs: publish
+    environment:
+      name: stg
+    
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: Deploy 
+        shell: bash
+        run: |
+          echo "Deploy STG"
+
+  deploy-Pre:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release'
+    environment:
+      name: pre
+    needs: publish
+    steps:
+      - name: Deploy 
+        shell: bash
+        run: |
+          echo "Deploy PRE"
+
+  deploy-Prod:
+    runs-on: ubuntu-latest
+    
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: prod
+    needs: publish
+    steps:
+      - name: Deploy 
+        shell: bash
+        run: |
+          echo "Deploy PROD" 
+          
+          
