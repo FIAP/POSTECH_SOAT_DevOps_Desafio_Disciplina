@@ -20,6 +20,10 @@ public class DataController {
         public String version() {
                 return "The actual version is 1.0.0";
         }
+         @GetMapping("/fiap-aluno")
+        public String fiap-aluno() {
+                return "Bem vindo a FIAP";
+        }
 
         @GetMapping("/nations")
         public JsonNode getRandomNations() {
